@@ -1,6 +1,7 @@
 package pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -18,6 +19,7 @@ public class LoginPage {
     private final By loginButton = By.cssSelector("[data-qa='login-button']");
     private final By errorMessage = By.xpath("//p[contains(text(),'incorrect!')]");
     private final By loggedInAs = By.xpath("//a[contains(.,'Logged in as')]");
+    private final By logoutLink=By.cssSelector("a[href='/logout']");
 
     public LoginPage(WebDriver driver) {
         this.driver = driver;
@@ -43,5 +45,20 @@ public class LoginPage {
     }
     public String getEmailValidationMessage() {
               return driver.findElement(emailInput).getDomProperty("validationMessage");
+    }
+
+    public void logout(){
+        wait.until(ExpectedConditions.elementToBeClickable(logoutLink)).click();
+    }
+
+    public boolean isLoginFormDisplayed(){
+     try{
+         wait.until(ExpectedConditions.visibilityOfElementLocated(emailInput));
+         return true;
+     }
+     catch(TimeoutException e){
+         return false;
+     }
+
     }
 }

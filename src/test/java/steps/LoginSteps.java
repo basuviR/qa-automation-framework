@@ -64,4 +64,15 @@ public class LoginSteps {
         String message = loginPage.getEmailValidationMessage();
         Assertions.assertFalse(message.isEmpty(), "Expected a validation message on the email field");
     }
+
+    @When("the user logs out")
+    public void theUserLogsOut() {
+        loginPage.logout();
+    }
+
+    @Then("the login page is shown")
+    public void theLoginPageIsShown() {
+        Assertions.assertTrue(loginPage.isLoginFormDisplayed(), "Expected the login form after logout");
+
+    }
 }

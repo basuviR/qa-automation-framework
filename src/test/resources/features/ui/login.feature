@@ -24,3 +24,9 @@ Feature: Login module
   Scenario: Login is blocked when the email is empty
     When the user logs in with an empty email
     Then the email field asks to be filled in
+
+  @regression
+  Scenario: Logged-in user logs out and returns to the login page
+    When the user logs in with valid credentials
+    And the user logs out
+    Then the login page is shown
