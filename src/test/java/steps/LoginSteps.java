@@ -31,9 +31,20 @@ public class LoginSteps {
         Assertions.assertTrue(actual.contains(expected), "Expected header to contain '" + expected + "', but was: " + actual);
     }
 
-    @When("the user logs in with a wrong password")
-    public void theUserLogsInWithAWrongPassword() {
+
+    @When("the user logs in  with wrong password")
+    public void the_user_logs_in_with_wrong_password() {
         loginPage.login(ConfigReader.get("testEmail"), ConfigReader.get("testPassword") + "x");
+    }
+
+    @When("the user logs in  with not unregistered email")
+    public void the_user_logs_in_with_not_unregistered_email() {
+        loginPage.login("not.registered@example.com", ConfigReader.get("testPassword"));
+    }
+
+    @When("the user logs in  with password in wrong case")
+    public void the_user_logs_with_password_in_wrong_case() {
+        loginPage.login(ConfigReader.get("testEmail"), ConfigReader.get("testPassword").toUpperCase());
     }
 
     @Then("an error message is shown")

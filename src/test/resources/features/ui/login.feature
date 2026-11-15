@@ -10,6 +10,11 @@ Feature: Login module
     Then the user sees their name in the header
 
   @negative
-  Scenario: Wrong password shows an error
-    When the user logs in with a wrong password
+  Scenario Outline: Login fails with <problem>
+    When the user logs in  with <problem>
     Then an error message is shown
+    Examples:
+      | problem                |
+      | wrong password         |
+      | not unregistered email |
+      | password in wrong case |
