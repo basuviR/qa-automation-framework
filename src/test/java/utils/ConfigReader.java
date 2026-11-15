@@ -21,21 +21,17 @@ public class ConfigReader {
         }
     }
 
-
     private ConfigReader() {
     }
 
 
     public static String get(String key) {
 
-
         String override = System.getProperty(key);
         if (override != null) {
             return override;
         }
-
         String value = properties.getProperty(key);
-
         if (value == null) {
             throw new RuntimeException("Missing key in config.properties: " + key);
         }
