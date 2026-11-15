@@ -41,4 +41,7 @@ public class LoginPage {
     public String getErrorMessage() {
         return wait.until(ExpectedConditions.visibilityOfElementLocated(errorMessage)).getText();
     }
+    public String getEmailValidationMessage() {
+              return driver.findElement(emailInput).getDomProperty("validationMessage");
+    }
 }

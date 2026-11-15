@@ -11,10 +11,16 @@ Feature: Login module
 
   @negative
   Scenario Outline: Login fails with <problem>
-    When the user logs in  with <problem>
+    When the user logs in with <problem>
     Then an error message is shown
+
     Examples:
       | problem                |
       | wrong password         |
-      | not unregistered email |
+      | unregistered email     |
       | password in wrong case |
+
+  @negative
+  Scenario: Login is blocked when the email is empty
+    When the user logs in with an empty email
+    Then the email field asks to be filled in

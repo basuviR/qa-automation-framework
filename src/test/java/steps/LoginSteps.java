@@ -32,26 +32,36 @@ public class LoginSteps {
     }
 
 
-    @When("the user logs in  with wrong password")
-    public void the_user_logs_in_with_wrong_password() {
+    @When("the user logs in with wrong password")
+    public void theUserLogsInWithWrongPassword() {
         loginPage.login(ConfigReader.get("testEmail"), ConfigReader.get("testPassword") + "x");
     }
 
-    @When("the user logs in  with not unregistered email")
-    public void the_user_logs_in_with_not_unregistered_email() {
+    @When("the user logs in with unregistered email")
+    public void theUserLogsInWithUnregisteredEmail() {
         loginPage.login("not.registered@example.com", ConfigReader.get("testPassword"));
     }
 
-    @When("the user logs in  with password in wrong case")
-    public void the_user_logs_with_password_in_wrong_case() {
+    @When("the user logs in with password in wrong case")
+    public void theUserLogsInWithPasswordInWrongCase() {
         loginPage.login(ConfigReader.get("testEmail"), ConfigReader.get("testPassword").toUpperCase());
     }
 
     @Then("an error message is shown")
     public void anErrorMessageIsShown() {
-
         String actual = loginPage.getErrorMessage();
         String expected = "Your email or password is incorrect!";
         Assertions.assertEquals(expected, actual, "Wrong error message");
+    }
+
+    @When("the user logs in with an empty email")
+    public void theUserLogsInWithAnEmptyEmail() {
+        loginPage.login("", ConfigReader.get("testPassword"));
+    }
+
+    @Then("the email field asks to be filled in")
+    public void theEmailFieldAsksToBeFilledIn() {
+        String message = loginPage.getEmailValidationMessage();
+        Assertions.assertFalse(message.isEmpty(), "Expected a validation message on the email field");
     }
 }
