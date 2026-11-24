@@ -2,6 +2,7 @@ package pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -12,9 +13,11 @@ public class ProductDetailsPage {
     // ---------- fields ----------
     private final WebDriver driver;
     private final WebDriverWait wait;
+    private final By quantityBox = By.xpath("//input[@id='quantity']");
+    private final By addToCartButton =
+            By.xpath("//div[contains(@class,'product-information')]//button[contains(.,'Add to cart')]");
 
-    // ---------- locators ----------
-    private final By name = By.cssSelector(".product-information h2");
+   private final By name = By.cssSelector(".product-information h2");
     private final By price = By.cssSelector(".product-information span span");
 
     // ---------- constructor ----------
@@ -46,6 +49,22 @@ public class ProductDetailsPage {
 
     public String getBrand() {
         return getDetail("Brand");
+    }
+
+
+   // ---- add to the actions ----
+    public void addToCart(int quantity) {
+        // 1. set the quantity
+        WebElement box = wait.until(ExpectedConditions.visibilityOfElementLocated(quantityBox));
+        box.clear();
+        box.sendKeys(String.valueOf(quantity));
+
+        // 2. click Add to cart
+           wait.until(ExpectedConditions.elementToBeClickable(addToCartButton)).click();
+
+        // 3. close the popup
+        new CartPopupComponent(driver).continueShopping();
+
     }
 
     // ---------- private helpers ----------
